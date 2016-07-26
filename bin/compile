@@ -34,8 +34,8 @@ deep_cp() {
 
 # Does some serious moving.
 deep_mv() {
-  deep-cp "$1" "$2"
-  deep-rm "$1"
+  deep_cp "$1" "$2"
+  deep_rm "$1"
 }
 
 # Does some serious deleting.
