@@ -16,8 +16,8 @@ subtitle() {
   echo "       $*"
 }
 
-deep-cp() {
-	echo "Hallo World"
+deep_cp() {
+  echo "Hallo World"
 }
 # Does some serious copying.
 # deep-cp() {
