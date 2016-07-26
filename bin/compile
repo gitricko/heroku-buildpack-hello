@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/bash
 
 indent() {
   sed -u 's/^/       /'
@@ -52,7 +52,7 @@ deep_rm() {
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-APP_DIR="/app"
+APP_DIR="./app"
 deep_mv $BUILD_DIR $APP_DIR
 ORIG_BUILD_DIR=$BUILD_DIR
 BUILD_DIR=$APP_DIR
