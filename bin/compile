@@ -33,26 +33,27 @@ deep-cp() {
 }
 
 # Does some serious moving.
-deep-mv() {
-  deep-cp "$1" "$2"
-  deep-rm "$1"
-}
+# deep-mv() {
+#   deep-cp "$1" "$2"
+#   deep-rm "$1"
+# }
 
 # Does some serious deleting.
-deep-rm() {
-  # subshell to avoid surprising caller with shopts.
-  (
-    #shopt -s dotglob
-    rm -rf "$1"/!(tmp|.|..)
-  )
-}
+# deep-rm() {
+#   # subshell to avoid surprising caller with shopts.
+#   (
+#     #shopt -s dotglob
+#     rm -rf "$1"/!(tmp|.|..)
+#   )
+# }
 ###################################
 
 BUILD_DIR=$1
 CACHE_DIR=$2
 
 APP_DIR="/app"
-deep-mv $BUILD_DIR $APP_DIR
+#deep-mv $BUILD_DIR $APP_DIR
+mv $BUILD_DIR $APP_DIR
 ORIG_BUILD_DIR=$BUILD_DIR
 BUILD_DIR=$APP_DIR
 cd $BUILD_DIR
@@ -85,6 +86,7 @@ EOF
 # export "\$PATH=\$HOME/.heroku/vendor/lib/:\$PATH"
 # above lines didn't do anything
 
-deep-mv $BUILD_DIR $ORIG_BUILD_DIR
+#deep-mv $BUILD_DIR $ORIG_BUILD_DIR
+mv $BUILD_DIR $ORIG_BUILD_DIR
 
 title "Buildpack installed."
