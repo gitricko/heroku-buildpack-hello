@@ -1,8 +1,8 @@
 #!/bin/bash
 
-indent() {
-  sed -u 's/^/       /'
-}
+# indent() {
+#   sed -u 's/^/       /'
+# }
 # SBL takes in BUILD_DIR CACHE_DIR ENV_DIR
 
 title() {
