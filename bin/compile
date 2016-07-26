@@ -16,6 +16,9 @@ subtitle() {
   echo "       $*"
 }
 
+deep-cp() {
+	echo "Hallo World"
+}
 # Does some serious copying.
 # deep-cp() {
 #   declare source="$1" target="$2"
