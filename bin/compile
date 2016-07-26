@@ -16,47 +16,43 @@ subtitle() {
   echo "       $*"
 }
 
-deep_cp() {
-  echo "Hallo World"
-}
 # Does some serious copying.
-# deep-cp() {
-#   declare source="$1" target="$2"
+deep_cp() {
+  declare source="$1" target="$2"
 
-#   mkdir -p "$target"
+  mkdir -p "$target"
 
-#   # cp doesn't like being called without source params,
-#   # so make sure they expand to something first.
-#   # subshell to avoid surprising caller with shopts.
-#   (
-#     #shopt -s nullglob dotglob
-#     set -- "$source"/!(tmp|.|..)
-#     [[ $# == 0 ]] || cp -a "$@" "$target"
-#   )
-# }
+  # cp doesn't like being called without source params,
+  # so make sure they expand to something first.
+  # subshell to avoid surprising caller with shopts.
+  (
+    #shopt -s nullglob dotglob
+    set -- "$source"/!(tmp|.|..)
+    [[ $# == 0 ]] || cp -a "$@" "$target"
+  )
+}
 
 # Does some serious moving.
-# deep-mv() {
-#   deep-cp "$1" "$2"
-#   deep-rm "$1"
-# }
+deep_mv() {
+  deep-cp "$1" "$2"
+  deep-rm "$1"
+}
 
 # Does some serious deleting.
-# deep-rm() {
-#   # subshell to avoid surprising caller with shopts.
-#   (
-#     #shopt -s dotglob
-#     rm -rf "$1"/!(tmp|.|..)
-#   )
-# }
+deep_rm() {
+  # subshell to avoid surprising caller with shopts.
+  (
+    #shopt -s dotglob
+    rm -rf "$1"/!(tmp|.|..)
+  )
+}
 ###################################
 
 BUILD_DIR=$1
 CACHE_DIR=$2
 
 APP_DIR="/app"
-#deep-mv $BUILD_DIR $APP_DIR
-mv $BUILD_DIR $APP_DIR
+deep_mv $BUILD_DIR $APP_DIR
 ORIG_BUILD_DIR=$BUILD_DIR
 BUILD_DIR=$APP_DIR
 cd $BUILD_DIR
@@ -89,7 +85,6 @@ EOF
 # export "\$PATH=\$HOME/.heroku/vendor/lib/:\$PATH"
 # above lines didn't do anything
 
-#deep-mv $BUILD_DIR $ORIG_BUILD_DIR
-mv $BUILD_DIR $ORIG_BUILD_DIR
+deep_mv $BUILD_DIR $ORIG_BUILD_DIR
 
 title "Buildpack installed."
