@@ -18,7 +18,7 @@ subtitle() {
 
 # Taken from python heroku buildpack
 ###################################
-shopt -s extglob
+#shopt -s extglob
 
 if [ $(uname) == Darwin ]; then
     sed() { command sed -l "$@"; }
