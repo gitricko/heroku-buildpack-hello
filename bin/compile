@@ -35,11 +35,11 @@ deep_cp() {
 # Does some serious moving.
 deep_mv() {
   deep_cp "$1" "$2"
-  deep_rm "$1"
+  deep-rm "$1"
 }
 
 # Does some serious deleting.
-deep_rm() {
+deep-rm() {
   # subshell to avoid surprising caller with shopts.
   (
     #shopt -s dotglob
