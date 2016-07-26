@@ -3,9 +3,6 @@
 indent() {
   sed -u 's/^/       /'
 }
-
-echo "-----> Found a hello.txt"
-
 # SBL takes in BUILD_DIR CACHE_DIR ENV_DIR
 
 title() {
@@ -16,8 +13,18 @@ subtitle() {
   echo "       $*"
 }
 
+# Taken from python heroku buildpack
+###################################
+shopt -s extglob
+
+if [ $(uname) == Darwin ]; then
+    sed() { command sed -l "$@"; }
+else
+    sed() { command sed -u "$@"; }
+fi
+
 # Does some serious copying.
-deep_cp() {
+deep-cp() {
   declare source="$1" target="$2"
 
   mkdir -p "$target"
@@ -26,15 +33,15 @@ deep_cp() {
   # so make sure they expand to something first.
   # subshell to avoid surprising caller with shopts.
   (
-    #shopt -s nullglob dotglob
-    #set -- "$source"/!(tmp|.|..)
+    shopt -s nullglob dotglob
+    set -- "$source"/!(tmp|.|..)
     [[ $# == 0 ]] || cp -a "$@" "$target"
   )
 }
 
 # Does some serious moving.
-deep_mv() {
-  deep_cp "$1" "$2"
+deep-mv() {
+  deep-cp "$1" "$2"
   deep-rm "$1"
 }
 
@@ -44,7 +51,6 @@ deep-rm() {
   (
     shopt -s dotglob
     rm -rf "$1"/!(tmp|.|..)
-    #rm -rf "$1"
   )
 }
 ###################################
@@ -52,8 +58,8 @@ deep-rm() {
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-APP_DIR="./app"
-deep_mv $BUILD_DIR $APP_DIR
+APP_DIR="/app"
+deep-mv $BUILD_DIR $APP_DIR
 ORIG_BUILD_DIR=$BUILD_DIR
 BUILD_DIR=$APP_DIR
 cd $BUILD_DIR
@@ -86,6 +92,6 @@ EOF
 # export "\$PATH=\$HOME/.heroku/vendor/lib/:\$PATH"
 # above lines didn't do anything
 
-deep_mv $BUILD_DIR $ORIG_BUILD_DIR
+deep-mv $BUILD_DIR $ORIG_BUILD_DIR
 
 title "Buildpack installed."
